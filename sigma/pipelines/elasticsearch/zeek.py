@@ -515,7 +515,7 @@ def ecs_zeek_beats() -> ProcessingPipeline:
     )
 
 
-def ecs_zeek_corelight() -> ProcessingPipeline:
+def ecs_zeek_corelight(add_dataset_condition: bool = False) -> ProcessingPipeline:
     return ProcessingPipeline(
         name="Elastic Common Schema (ECS) mapping from Corelight",
         priority=20,
@@ -532,7 +532,7 @@ def ecs_zeek_corelight() -> ProcessingPipeline:
             )
             for category, service in ecs_zeek_beats_category_service_mapping.items()
         ]
-        + [
+        + ([
             ProcessingItem(
                 identifier="zeek_ecs_event_dataset",
                 transformation=AddConditionTransformation(
@@ -542,7 +542,9 @@ def ecs_zeek_corelight() -> ProcessingPipeline:
                 rule_conditions=[
                     LogsourceCondition(product="zeek"),
                 ],
-            ),
+            )
+        ] if add_dataset_condition else [])
+        + [
             ProcessingItem(  # Field mappings
                 identifier="zeek_ecs_field_mapping",
                 transformation=FieldMappingTransformation(
