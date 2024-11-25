@@ -3,7 +3,7 @@ from sigma.conversion.state import ConversionState
 from sigma.rule import SigmaRule, SigmaRuleTag
 from sigma.conversion.base import TextQueryBackend
 from sigma.conditions import ConditionItem, ConditionAND, ConditionOR, ConditionNOT
-from sigma.types import SigmaCompareExpression
+from sigma.types import SigmaCompareExpression, CompareOperators
 from sigma.data.mitre_attack import mitre_attack_tactics, mitre_attack_techniques
 import sigma
 import re
@@ -121,11 +121,11 @@ class ESQLBackend(TextQueryBackend):
         "{field}{operator}{value}"  # Compare operation query as format string with placeholders {field}, {operator} and {value}
     )
     # Mapping between CompareOperators elements and strings used as replacement for {operator} in compare_op_expression
-    compare_operators: ClassVar[Dict[SigmaCompareExpression.CompareOperators, str]] = {
-        SigmaCompareExpression.CompareOperators.LT: "<",
-        SigmaCompareExpression.CompareOperators.LTE: "<=",
-        SigmaCompareExpression.CompareOperators.GT: ">",
-        SigmaCompareExpression.CompareOperators.GTE: ">=",
+    compare_operators: ClassVar[Dict[CompareOperators, str]] = {
+        CompareOperators.LT: "<",
+        CompareOperators.LTE: "<=",
+        CompareOperators.GT: ">",
+        CompareOperators.GTE: ">=",
     }
 
     # Expression for comparing two event fields
