@@ -53,7 +53,10 @@ def ecs_zeek_beats() -> ProcessingPipeline:
                             "destination.address",
                             "destination.ip",
                         ],
-                        "dst_ip": "destination.ip",
+                        "dst_ip": [
+                            "destination.address",
+                            "destination.ip",
+                        ],
                         "dst_port": "destination.port",
                         "network_application": "network.protocol",
                         "network_community_id": "network.community_id",
@@ -550,10 +553,7 @@ def ecs_zeek_corelight(add_dataset_condition: bool = False) -> ProcessingPipelin
                             "destination.address",
                             "destination.ip",
                         ],
-                        "dst_ip": [
-                            "destination.address",
-                            "destination.ip",
-                        ],
+                        "dst_ip": "destination.ip",
                         "dst_port": "destination.port",
                         "network_application": "network.protocol",
                         "network_community_id": "network.community_id",
